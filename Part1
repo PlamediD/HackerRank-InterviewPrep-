@@ -1,0 +1,129 @@
+/*
+ * Complete the 'minimumAbsoluteDifference' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts INTEGER_ARRAY arr as parameter.
+ */
+
+int minimumAbsoluteDifference(vector<int> arr) {
+    sort(arr.begin(), arr.end());
+    int diff = abs(arr[0] - arr[1]);
+
+    for (int i = arr.size() - 1; i >= 0; --i) {
+        if (abs(arr[i] - arr[i - 1]) < diff)
+            diff = abs(arr[i] - arr[i - 1]);
+    }
+
+    return diff;
+}
+
+
+/*Complete the getHeight or height function in the editor. It must return the height of a binary tree as an integer.
+
+getHeight or height has the following parameter(s):
+
+root: a reference to the root of a binary tree.
+Note -The Height of binary tree with single node is taken as zero*/
+
+/*The tree node has data, left child and right child 
+class Node {
+    int data;
+    Node* left;
+    Node* right;
+};
+
+*/
+    int height(Node* root) {
+        if(root==nullptr){
+            return -1; 
+        }
+        else{
+            int leftHeight=height(root->left); 
+            int rightHeight=height(root->right);
+            if(leftHeight>rightHeight){
+                return leftHeight+1; 
+            }
+            else{
+                return rightHeight+1; 
+            }
+            
+        }
+        
+    }
+    
+    
+    /*You are given pointer to the root of the binary search tree and two values  and . 
+    You need to return the lowest common ancestor (LCA) of  and  in the binary search tree.
+    
+    Complete the function lca in the editor below. It should return a pointer to the lowest common ancestor node of the two values given.
+
+lca has the following parameters:
+- root: a pointer to the root node of a binary search tree
+- v1: a node.data value
+- v2: a node.data value
+
+Input Format
+
+The first line contains an integer, , the number of nodes in the tree.
+The second line contains  space-separated integers representing  values.
+The third line contains two space-separated integers,  and .
+
+To use the test data, you will have to create the binary search tree yourself. Here on the platform, the tree will be created for you.*/
+
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+class Node {
+    public:
+        int data;
+        Node *left;
+        Node *right;
+        Node(int d) {
+            data = d;
+            left = NULL;
+            right = NULL;
+        }
+};
+
+class Solution {
+    public:
+  		Node* insert(Node* root, int data) {
+            if(root == NULL) {
+                return new Node(data);
+            } else {
+                Node* cur;
+                if(data <= root->data) {
+                    cur = insert(root->left, data);
+                    root->left = cur;
+                } else {
+                    cur = insert(root->right, data);
+                    root->right = cur;
+               }
+
+               return root;
+           }
+        }
+
+/*The tree node has data, left child and right child 
+class Node {
+    int data;
+    Node* left;
+    Node* right;
+};
+
+*/
+
+  
+    Node *lca(Node *root, int v1,int v2) {
+       if (root == nullptr)
+      return nullptr;
+   if (root->data > v1 && root->data > v2)
+      return lca(root->left, v1, v2);
+   if (root->data< v1 && root->data < v2)
+      return lca(root->right, v1, v2);
+      return root;
+		// Write your code here.
+    }
+    
